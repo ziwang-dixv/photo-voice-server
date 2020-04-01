@@ -2,22 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flask上传图片演示</title>
+    <title>上传图片或声音</title>
 </head>
 <body>
     <h1>上传本地图片</h1>
-    <form action="upload/photo?"  enctype='multipart/form-data' method='POST'>
+    <form action="upload/photo?"  enctype='multipart/form-data' method='POST' id="photo_form">
         <input type="file" name="file" style="margin-top:20px;"/>
         <br>
         <i>请输入你的名字（仅限英文）：</i>
-        <input type="text" class="txt_input" name="username" id="username" value="user" style="margin-top:10px;" />
-        <input type="submit" value="上传" class="button-new" style="margin-top:15px;" onclick="build_action()"/>
+        <input type="text" class="txt_input" name="photo_user" id="photo_user" value="abc" style="margin-top:10px;" />
+        <input type="submit" value="上传" class="button-new" style="margin-top:15px;" onclick="build_photo_action()"/>
+    </form>
+    <br>
+    <h1>上传本地音频(wav)</h1>
+    <form action="upload/voice?"  enctype='multipart/form-data' method='POST' id="voice_form">
+        <input type="file" name="file" style="margin-top:20px;"/>
+        <br>
+        <i>请输入你的名字（仅限英文）：</i>
+        <input type="text" class="txt_input" name="voice_user" id="voice_user" value="abc" style="margin-top:10px;" />
+        <input type="submit" value="上传" class="button-new" style="margin-top:15px;" onclick="build_voice_action()"/>
     </form>
 </body>
 <script>
-    function build_action(){
+    function build_photo_action(){
         var f = document.getElementsByTagName("form")[0];
-        f.action=f.action+"user="+document.getElementById("username").value;
+        f.action=f.action+"user="+document.getElementById("photo_user").value;
+        alert(f.action);
+    }
+    function build_voice_action(){
+        var f = document.getElementsByTagName("form")[1];
+        f.action=f.action+"user="+document.getElementById("voice_user").value;
         alert(f.action);
     }
 </script>

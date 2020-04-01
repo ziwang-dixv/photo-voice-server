@@ -33,20 +33,21 @@ def upload_photo():
 def upload_voice():
     voice_tag = request.args.get('user')
     voice_file = request.files['file']  # 获取上传的文件
-    voice_id = photo_manager.add_photo(voice_file, voice_tag)
+    voice_id = voice_manager.add_voice(voice_file, voice_tag)
     if voice_id == '':
         abort(415)
     rt = {'voice_id': voice_id}
     return Response(json.dumps(rt), mimetype='application/json')
 
 
-@app.route('/process', methods=['POST'])
+@app.route('/process', methods=['POST', 'GET'])
 def process():
     photo_id = request.args.get('photo_id')
     voice_id = request.args.get('voice_id')
     photo_data = photo_manager.get_photo(photo_id)
-    sample_rate, voice_data = voice_manager.get_voice(voice_id)
-    if photo_data is None or sample_rate is None:
+    #sample_rate, voice_data = voice_manager.get_voice(voice_id)
+    voice_data = voice_manager.get_voice_raw(voice_id)
+    if photo_data is None or voice_data is None:
         abort(404)
     # TODO use photo data and voice data to process result
     photo_raw = photo_manager.get_photo_raw(photo_id)
